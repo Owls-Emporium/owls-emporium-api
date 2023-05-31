@@ -1,0 +1,28 @@
+{
+  "name": "owls-emporium-api",
+  "version": "1.0.0",
+  "description": "Backend de la aplicacion owls-emporium",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Owls-Emporium/owls-emporium-api.git"
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Kevin-Rodolfo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Owls-Emporium/owls-emporium-api/issues"
+  },
+  "homepage": "https://github.com/Owls-Emporium/owls-emporium-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "morgan": "^1.10.0"
+  }
+}
