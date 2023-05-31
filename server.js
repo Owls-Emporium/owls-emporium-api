@@ -26,7 +26,20 @@ server.listen(3001,'192.168.1.21' || 'localhost', function(){
 })
 
 
-
+//routes
+app.get('/',(req,res) => {
+    res.send('Ruta raiz de backend')
+});
+app.get('/test',(req,res) => {
+    res.send('Ruta test')
+});
+    
+//errors handler
+app.use((err,req,res,next) => {
+console.log(err);
+res.status(err.status || 500).send(err.stack);
+ });
+    
 
 
 //control c to finish nodemon
