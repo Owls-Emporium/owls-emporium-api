@@ -1,5 +1,4 @@
 const express = require('express');
-//building server
 var expressSession = require("express-session");
 const app = express();
 const http = require('http');
@@ -7,6 +6,17 @@ const server = http.createServer(app);
 const logger = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
+const multer = require('multer');
+const serviceAccount = require('./serviceAccountKey.json');
+const admin = require('firebase-admin')
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+const upload = multer ({
+    storage: multer.memoryStorage()
+});
 
 //RUTAS
 const users = require('./routes/usersRoutes');
