@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Owls-Emporium/owls-emporium-api#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
