@@ -5,7 +5,11 @@ const http = require('http');
 const server = http.createServer(app);
 const logger = require('morgan')
 const cors = require('cors')
-const port = process.env.PORT || 3001;
+
+//RUTAS
+const users = require('./routes/usersRoutes');
+
+const port = process.env.PORT || 3000;
 
 
 //for debug
@@ -18,21 +22,16 @@ app.use(cors());
 
 app.disable('x-powered-by');
 app.set('port', port);
+//llamando a las rutas
+users(app);
 
-//modify the ip
+
+//modify the ip 192.168.1.21 ip a list
 //maybe this is the error
-server.listen(3001,'192.168.1.21' || 'localhost', function(){
+server.listen(3000,'192.168.1.21', function(){
     console.log('aplicacion de NodeJS '+'puerto ' + port + ' iniciada...')
 })
 
-
-//routes
-app.get('/',(req,res) => {
-    res.send('Ruta raiz de backend')
-});
-app.get('/test',(req,res) => {
-    res.send('Ruta test')
-});
     
 //errors handler
 app.use((err,req,res,next) => {
@@ -40,6 +39,9 @@ console.log(err);
 res.status(err.status || 500).send(err.stack);
  });
     
-
+module.exports = {
+    app: app,
+    server: server
+}
 
 //control c to finish nodemon
