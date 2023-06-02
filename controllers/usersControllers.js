@@ -1,5 +1,6 @@
 //const passport = require('../config/passport');
 const User = require('../models/user');
+const  Rol= require('../models/rol');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys')
@@ -27,18 +28,33 @@ module.exports ={
             const user = req.body;
             const data = await User.create(user);
 
+            await Rol.create(data.id, 1);
+
+            const token = jwt.sign({id: data.id, email: user.email,}, keys.secretOrKey,{
+                //expiresIn: 
+            })
+
+            const myData ={
+                id: data.id,
+                name: user.name,
+                lastname: user.lastname,
+                email: user.email,
+                phone: user.phone,
+                image: user.image,
+                session_token: `JWT ${token}`
+            };
+
             return res.status(201).json({
                 success: true,
                 message: 'El resgistro se realizo correctamente',
-                data : {
-                    'id': data.id
-                }
-            })
+                data : myData
+            });
+
         } catch (error) {
             console.log(`Error: ${error}`);
             return res.status(501).json({
                 success: false,
-                message: 'No se puede realizar el registro',
+                message: 'No se puede realizar el registro usercontrollers',
                 error: error
             });
         }
@@ -72,8 +88,12 @@ module.exports ={
                     email: myUser.email,
                     phone: myUser.phone,
                     image: myUser.image,
-                    session_token: `JWT ${token}`
+                    session_token: `JWT ${token}`,
+                    roles: myUser.roles
                 };
+                //when user get rol
+                    console.log(`Usuario enviado ${data}`)
+                    
                 return res.status(201).json({
                     success: true,
                     message: 'El usuario ha sido auntentificado',
