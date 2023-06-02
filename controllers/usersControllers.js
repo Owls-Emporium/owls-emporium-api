@@ -4,6 +4,7 @@ const  Rol= require('../models/rol');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys')
+const storage = require('../utils/cloud_storage')
 
 module.exports ={
     async getAll(req,res,next){
@@ -93,7 +94,7 @@ module.exports ={
                 };
                 //when user get rol
                     console.log(`Usuario enviado ${data}`)
-                    
+
                 return res.status(201).json({
                     success: true,
                     message: 'El usuario ha sido auntentificado',
@@ -112,6 +113,43 @@ module.exports ={
             return res.status(501).json({
                 success: false,
                 message: 'sucedio un error en el login de usuario usercontrollers',
+                error: error
+            });
+        }
+    },
+
+    async update (req,res,next){
+        try {
+            console.log('Usuario',req.body.user);
+
+            const user = JSON.parse(req.body.user);
+            console.log('Usuario Parseado',user);
+
+            const files = req.files;
+
+            if(files.length > 0 ) {  //client send a archivo
+
+                const pathImage = `image_${Date.now()}`; // nombre del archivo
+                const url = await storage(file[0],pathImage);
+
+                if(url != indefined && url != null) {
+                    user.image = url;
+                }
+            }
+
+            await User.update(user); // Guardando la url de la iimagen en  la base de datos
+
+            return res.status(201).json({
+                success: true,
+                message: 'Los datos del usuario se han actualizado exitosamente',
+                data : user
+            });
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'sucedio un error al actualizar los datos del usuario usercontrollers',
                 error: error
             });
         }
