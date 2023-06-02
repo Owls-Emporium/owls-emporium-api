@@ -1,15 +1,25 @@
 const express = require('express');
 //building server
+var expressSession = require("express-session");
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const logger = require('morgan')
-const cors = require('cors')
+const logger = require('morgan');
+const cors = require('cors');
+const passport = require('passport');
 
 //RUTAS
 const users = require('./routes/usersRoutes');
 
 const port = process.env.PORT || 3000;
+
+
+ 
+app.use(expressSession({
+    secret: "This is one hell of a secret",
+    resave: false,
+    saveUninitialized: false
+  }));
 
 
 //for debug
@@ -19,6 +29,10 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 app.disable('x-powered-by');
 app.set('port', port);
