@@ -1,5 +1,5 @@
 const usersControllers = require('../controllers/usersControllers');
-const UsersController = require('../controllers/usersControllers');
+const passport = require('passport');
 
 module.exports = (app, upload) => {
     app.get('/api/users/getAll', usersControllers.getAll);
