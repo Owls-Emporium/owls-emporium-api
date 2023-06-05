@@ -20,6 +20,7 @@ const upload = multer ({
 
 //RUTAS
 const users = require('./routes/usersRoutes');
+const categories = require('./routes/categoriesRoutes')
 
 const port = process.env.PORT || 3000;
 
@@ -43,25 +44,27 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./config/passport')(passport);
-
 app.disable('x-powered-by');
 app.set('port', port);
+
+
 //llamando a las rutas
-users(app);
+users(app,);
+categories(app);
 
 
 //modify the ip 192.168.1.21 ip a list
 //maybe this is the error
-server.listen(3000,'192.168.1.21', function(){
+server.listen(3000,'192.168.56.21', function(){
     console.log('aplicacion de NodeJS '+'puerto ' + port + ' iniciada...')
 })
 
     
 //errors handler
 app.use((err,req,res,next) => {
-console.log(err);
-res.status(err.status || 500).send(err.stack);
- });
+    console.log(err);
+    res.status(err.status || 500).send(err.stack);
+    });
     
 module.exports = {
     app: app,
