@@ -57,7 +57,7 @@ products(app, upload)
 
 //modify the ip 192.168.1.21 ip a list
 //maybe this is the error
-server.listen(3000,'192.168.1.21', function(){
+server.listen(3000,'192.168.56.21', function(){
     console.log('aplicacion de NodeJS '+'puerto ' + port + ' iniciada...')
 })
 
