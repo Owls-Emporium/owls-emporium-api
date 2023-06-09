@@ -1,8 +1,26 @@
 const Product = require('../models/product');
 const storage = require('../utils/cloud_storage');
 const asyncForEach = require('../utils/async_foreach');
+const Condition = require('../models/condition')
 
 module.exports = {
+
+    async getAll(req,res,next){
+        try{
+            const data = await Product.getAll();
+            console.log(`Products: ${data}`);
+            return res.status(201).json(data);
+        }
+        catch(error){
+            console.log(`Error: ${error}`);
+            return res.status(501).json(
+                {
+                   success: false,
+                   message: 'Error al obtener los productos en getall' 
+                }
+            );
+        }
+    },
 
     async finByCategory(req,res,next){
         try {
@@ -38,8 +56,9 @@ module.exports = {
         else {
             try {
 
-                const data = await Product.create(product);
                 product.id = data.id;
+                const data = await Product.create(product);
+                await Condition.create(data.id, 2);
                 
                 const start = async()=>{
                     await asyncForEach(files, async(files) =>{
@@ -62,6 +81,9 @@ module.exports = {
                         inserts = inserts + 1 ;
 
                         if(inserts == files.length){
+
+
+
                             return res.status(201).json({
                                 success: true,
                                 message: 'El producto se ha registrado exitosamente'

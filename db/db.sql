@@ -88,4 +88,15 @@ CREATE TABLE products(
     update_at TIMESTAMP(0) NOT NULL,
     FOREIGN KEY(id_category) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-//realizar la tabla cruzada entre condition and products
+
+DROP TABLE IF EXITS products_has_condition CASCADE;
+CREATED TABLE products_has_condition(
+    id_product BIGSERIAL NOT NULL,
+    id_condition BIGSERIAL NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    update_at TIMESTAMP(0) NOT NULL,
+    FOREIGN KEY(id_product) REFERENCES products(id) ON UPDATE CASCADE OM DELETE CASCADE,
+    FOREIGN KEY(id_condition) REFERENCES condition(id) ON UPDATE CASCADE OM DELETE CASCADE,
+    PRIMARY KEY(id_product, id_condition)    
+);
+

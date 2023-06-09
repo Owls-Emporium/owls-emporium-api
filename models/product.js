@@ -1,6 +1,20 @@
 const db = require('../config/config');
+
+
 const Product ={};
 
+
+Product.getAll = ()=>{
+    const sql = `
+    SELECT
+         * 
+    FROM 
+        public.products
+    ORDER BY id ASC
+    `;
+
+    return db.manyOrNone(sql);
+}
 
 Product.finByCategory = (id_category) => {
     const sql = `
@@ -23,6 +37,38 @@ Product.finByCategory = (id_category) => {
         C.id= $1
     `;
     return db.manyOrNone(sql, id_category);
+}
+
+Product.findByName = (name) => {
+    const sql = `
+    SELECT 
+        P.id,
+        P.name,
+        P.description,
+        P.price,
+        json_agg(
+            json_build_object(
+                'id', C.id,
+                'name', C.name
+            )
+        ) AS condition
+    FROM
+        products AS P
+    INNER JOIN 
+        products_has_condition AS PHC
+    ON
+        PHC.id_product = P.id
+    INNER JOIN
+        condition AS C
+    ON
+        C.id = PHC.id_condition
+    WHERE
+        p.name = $1
+    GROUP BY 
+        p.id
+    `;
+    
+    return db.oneOrNone(sql, name);
 }
 
 Product.create = (product) => {
