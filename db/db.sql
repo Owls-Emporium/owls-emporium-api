@@ -57,3 +57,46 @@ VALUES(
 '2023-05-10',
 '2023-05-10'
 );
+
+DROP TABLE IF EXISTS categories;
+CREATE TABLE categories(
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(180) NOT NULL UNIQUE,
+	created_at,
+    update_at
+)
+
+DROP TABLE IF EXISTS condition;
+CREATE TABLE condition(
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(180) NOT NULL UNIQUE,
+	created_at,
+    update_at
+)
+
+DROP TABLE IF EXISTS products CASCADE;
+CREATE TABLE products(
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    price DECIMAL DEFAULT 0,
+    image1 VARCHAR(255) NULL,
+    image2 VARCHAR(255) NULL,
+    image3 VARCHAR(255) NULL,
+    id_category BIGINT NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    update_at TIMESTAMP(0) NOT NULL,
+    FOREIGN KEY(id_category) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DROP TABLE IF EXITS products_has_condition CASCADE;
+CREATED TABLE products_has_condition(
+    id_product BIGSERIAL NOT NULL,
+    id_condition BIGSERIAL NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    update_at TIMESTAMP(0) NOT NULL,
+    FOREIGN KEY(id_product) REFERENCES products(id) ON UPDATE CASCADE OM DELETE CASCADE,
+    FOREIGN KEY(id_condition) REFERENCES condition(id) ON UPDATE CASCADE OM DELETE CASCADE,
+    PRIMARY KEY(id_product, id_condition)    
+);
+

@@ -41,7 +41,7 @@ User.findByEmail = (email) => {
         ON
             R.id = UHR.id_rol
         WHERE
-            U.email = 'rodolfo2@gmail.com'
+            U.email = $1
         GROUP BY 
             U.id
     `;

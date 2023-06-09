@@ -20,7 +20,8 @@ const upload = multer ({
 
 //RUTAS
 const users = require('./routes/usersRoutes');
-const categories = require('./routes/categoriesRoutes')
+const categories = require('./routes/categoriesRoutes');
+const products = require('./routes/productRoutes');
 
 const port = process.env.PORT || 3000;
 
@@ -51,6 +52,7 @@ app.set('port', port);
 //llamando a las rutas
 users(app,);
 categories(app);
+products(app, upload)
 
 
 //modify the ip 192.168.1.21 ip a list
