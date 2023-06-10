@@ -2,6 +2,7 @@ const usersControllers = require('../controllers/usersControllers');
 const passport = require('passport');
 
 module.exports = (app, upload) => {
+    
     app.get('/api/users/getAll', usersControllers.getAll);
 
     app.post('/api/users/create',usersControllers.register);
