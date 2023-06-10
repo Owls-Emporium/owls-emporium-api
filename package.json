@@ -1,10 +1,12 @@
 {
   "name": "owls-emporium-api",
   "version": "1.0.0",
-  "description": "Backend de la aplicacion owls-emporium",
+  "description": "Backend de la aplicación owls-emporium",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "firebase-admin": "^11.9.0",

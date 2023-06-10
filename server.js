@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 var expressSession = require("express-session");
 const app = express();
 const http = require('http');
@@ -18,13 +19,10 @@ const upload = multer ({
     storage: multer.memoryStorage()
 });
 
-//RUTAS
+//ROUTES
 const users = require('./routes/usersRoutes');
 const categories = require('./routes/categoriesRoutes');
 const products = require('./routes/productRoutes');
-
-const port = process.env.PORT || 3000;
-
 
  
 app.use(expressSession({
@@ -46,19 +44,20 @@ app.use(passport.session());
 
 require('./config/passport')(passport);
 app.disable('x-powered-by');
-app.set('port', port);
+app.set('port', process.env.PORT);
 
 
-//llamando a las rutas
+//calling routes
 users(app,);
 categories(app);
 products(app, upload)
 
+//public directory
+app.use( express.static('public'));
 
-//modify the ip 192.168.1.21 ip a list
-//maybe this is the error
-server.listen(3000,'192.168.56.21', function(){
-    console.log('aplicacion de NodeJS '+'puerto ' + port + ' iniciada...')
+//LISTENER
+server.listen(process.env.PORT,() => {
+    console.log('aplicacion de NodeJS '+'puerto ' + process.env.PORT + ' iniciada...')
 })
 
     
@@ -73,4 +72,4 @@ module.exports = {
     server: server
 }
 
-//control c to finish nodemon
+//to run: npm run dev or nodemon server.js
