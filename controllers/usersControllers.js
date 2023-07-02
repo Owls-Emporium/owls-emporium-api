@@ -48,7 +48,10 @@ module.exports ={
             return res.status(201).json({
                 success: true,
                 message: 'El resgistro se realizo correctamente',
-                data : myData
+                //data : myData
+                data: {
+                    'id':data.id
+                }
             });
 
         } catch (error) {
@@ -97,8 +100,8 @@ module.exports ={
 
                 return res.status(201).json({
                     success: true,
-                    message: 'El usuario ha sido auntentificado',
-                    data: data
+                    data: data,
+                    message: 'El usuario ha sido auntentificado'
                 });
             }
             else{

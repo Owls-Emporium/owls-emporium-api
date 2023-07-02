@@ -44,8 +44,7 @@ User.findByEmail = (email) => {
             U.email = $1
         GROUP BY 
             U.id
-    `;
-    
+    `
     return db.oneOrNone(sql, email);
 }
 
